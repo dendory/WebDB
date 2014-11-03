@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JS Test</title>
+		<script>
+			function webdb(str)
+			{
+				document.getElementById("verif").style.color = "green";
+				document.getElementById("verif").innerHTML = "Request sent.";
+				var req = new XMLHttpRequest();
+				req.onreadystatechange = function()
+				{
+					if(req.readyState == 4)
+					{
+						document.getElementById("status").value = req.status;
+						document.getElementById("result").value = req.responseText;
+					}
+				}
+				req.open('POST', "webdb.pl", true);
+				req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				req.send(str);
+			}
+
+			function register()
+			{
+				if(document.getElementById('appname').value == "")
+				{
+					document.getElementById("verif").style.color = "red";
+					document.getElementById("verif").innerHTML = "You need to enter an app name.";
+				}
+				else webdb("register=" + document.getElementById('appname').value);
+			}
+
+			function save()
+			{
+				if(document.getElementById('key').value == "" || document.getElementById('secret').value == "" || document.getElementById('data').value == "")
+				{
+					document.getElementById("verif").style.color = "red";
+					document.getElementById("verif").innerHTML = "You need to enter a secret, key and value.";
+				}
+				else webdb("save=" + document.getElementById('key').value + "&secret=" + document.getElementById('secret').value + "&data=" + document.getElementById('data').value);
+			}
+
+			function load()
+			{
+				if(document.getElementById('key').value == "" || document.getElementById('secret').value == "")
+				{
+					document.getElementById("verif").style.color = "red";
+					document.getElementById("verif").innerHTML = "You need to enter a secret and key.";
+				}
+				else webdb("load=" + document.getElementById('key').value + "&secret=" + document.getElementById('secret').value);
+			}
+
+			function timestamp()
+			{
+				if(document.getElementById('key').value == "" || document.getElementById('secret').value == "")
+				{
+					document.getElementById("verif").style.color = "red";
+					document.getElementById("verif").innerHTML = "You need to enter a secret and key.";
+				}
+				else webdb("timestamp=" + document.getElementById('key').value + "&secret=" + document.getElementById('secret').value);
+			}
+		</script>
+	</head>
+	<body>
+		<nobr>Register: <input type='text' id='appname' placeholder="App name" />	<input type='button' onclick='register()' value='Register' /></nobr> &nbsp;
+		<nobr>Operations: <input type='text' id='secret' placeholder="Secret" /> <input type='text' id='key' placeholder="Key" /> <input type='button' onclick='load()' value='Load' /> <input type='button' onclick='timestamp()' value='Timestamp' /></nobr> &nbsp;
+		<nobr><input type='text' id='data' placeholder="Value" /> <input type='button' onclick='save()' value='Save' /></nobr>
+		<hr>
+		<p>Status: <input type='text' id='status' size='3'> Result: <span id='verif'></span><br>
+		<textarea id='result' style='width:90%' rows='4'></textarea></p>
+	</body>
+</html>
