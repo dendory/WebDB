@@ -142,7 +142,7 @@ elsif(($cgi->param("load") || $cgi->param("timestamp")) && $cgi->param("secret")
 }
 else # unknown request
 {
-	output(405, "GET or POST parameters should be one of the following: register = <app name>, save = <key> & data = <text> & secret = <secret>, load = <key> & secret = <secret>, timestamp = <key> & secret <secret>");
+	output(405, "GET or POST parameters should be one of the following: register = <app name>, save = <key> & data = <text> & secret = <secret>, load = <key> & secret = <secret>, timestamp = <key> & secret = <secret>");
 }
 
 # Output code
